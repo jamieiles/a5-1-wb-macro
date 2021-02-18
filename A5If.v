@@ -16,7 +16,7 @@ module A5If (
 wire l0_q, l1_q, l2_q;
 wire lfsr_clk_en = ~fifo_full;
 
-a5lfsr #(
+AFLFSR #(
     .num_bits(19),
     .num_taps(4),
     .tap_bits(19'b111_0010_0000_0000_0000),
@@ -29,7 +29,7 @@ a5lfsr #(
     .q(l0_q)
 );
 
-a5lfsr #(
+AFLFSR #(
     .num_bits(22),
     .num_taps(4),
     .tap_bits(22'b11_0000_0000_0000_0000_0000),
@@ -42,7 +42,7 @@ a5lfsr #(
     .q(l1_q)
 );
 
-a5lfsr #(
+AFLFSR #(
     .num_bits(23),
     .num_taps(4),
     .tap_bits(23'b000_0000_0000_0000_1000_0000),
@@ -110,41 +110,5 @@ always @(posedge clk or negedge reset_n) begin
         end
     end
 end
-
-endmodule
-
-module a5lfsr #(
-    parameter num_bits = 8,
-    parameter num_taps = 3,
-    parameter tap_bits = 8'h80,
-    parameter clock_bit = 8'h80
-)(
-    input wire clk,
-    input wire reset_n,
-    input wire clk_en,
-    input wire d,
-    output wire q
-);
-
-reg [num_bits-1:0] sr;
-reg feedback;
-
-integer i;
-
-assign q = sr[num_bits-1];
-
-always @(*) begin
-    feedback = 1'b0;
-    for (i = 0; i < num_bits; i = i + 1) begin
-        if (tap_bits[i])
-            feedback ^= sr[i];
-    end
-end
-
-always @(posedge clk or negedge reset_n)
-    if (!reset_n)
-        sr <= {num_bits{1'b0}};
-    else if (clk_en)
-        sr <= {sr[num_bits-2:0], d ^ feedback};
 
 endmodule

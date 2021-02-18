@@ -1,4 +1,8 @@
-VERILOG_SOURCES = $(PWD)/wrapper.v $(PWD)/testbench.v $(PWD)/A5If.v $(PWD)/Fifo.v
+VERILOG_SOURCES = $(PWD)/wrapper.v \
+	$(PWD)/testbench.v \
+	$(PWD)/A5If.v \
+	$(PWD)/Fifo.v \
+	$(PWD)/A5LFSR.v
 TOPLEVEL=testbench
 MODULE=test_wrapper
 COMPILE_ARGS=-D MPRJ_IO_PADS=38 -Wall
