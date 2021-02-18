@@ -3,6 +3,7 @@ VERILOG_SOURCES = $(PWD)/wrapper.v \
 	$(PWD)/A5If.v \
 	$(PWD)/Fifo.v \
 	$(PWD)/A5LFSR.v \
+	$(PWD)/A5Buffer.v \
 	$(PWD)/A5Generator.v
 
 TOPLEVEL=testbench
