@@ -7,7 +7,7 @@ VERILOG_SOURCES = $(PWD)/wrapper.v \
 
 TOPLEVEL=testbench
 MODULE=test_wrapper
-COMPILE_ARGS=-D MPRJ_IO_PADS=38 -Wall
+COMPILE_ARGS=-D MPRJ_IO_PADS=38 -Wall -I $(PWD)/sim
 SIM_BUILD=$(PWD)/_build/sim_build
 export PYTHONDONTWRITEBYTECODE=1
 

@@ -5,6 +5,7 @@ set ::env(VERILOG_FILES) "$::env(DESIGN_DIR)/../A5If.v
     $::env(DESIGN_DIR)/../wrapper.v
     $::env(DESIGN_DIR)/../Fifo.v"
 set ::env(SDC_FILE) "$::env(DESIGN_DIR)/wrapper.sdc"
+set ::env(VERILOG_INCLUDE_DIRS) "$::env(DESIGN_DIR)"
 
 set ::env(DIE_AREA) "0 0 300 300"
 set ::env(FP_SIZING) absolute
