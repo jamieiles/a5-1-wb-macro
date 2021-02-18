@@ -13,47 +13,7 @@ module A5If (
     output reg [31:0] wbs_dat_o
 );
 
-wire l0_q, l1_q, l2_q;
 wire lfsr_clk_en = ~fifo_full;
-
-AFLFSR #(
-    .num_bits(19),
-    .num_taps(4),
-    .tap_bits(19'b111_0010_0000_0000_0000),
-    .clock_bit(19'b000_0000_0001_0000_0000)
-) l0 (
-    .clk(clk),
-    .reset_n(reset_n),
-    .clk_en(lfsr_clk_en),
-    .d(clk),
-    .q(l0_q)
-);
-
-AFLFSR #(
-    .num_bits(22),
-    .num_taps(4),
-    .tap_bits(22'b11_0000_0000_0000_0000_0000),
-    .clock_bit(22'b00_0000_0000_0100_0000_0000)
-) l1 (
-    .clk(clk),
-    .reset_n(reset_n),
-    .clk_en(lfsr_clk_en),
-    .d(clk),
-    .q(l1_q)
-);
-
-AFLFSR #(
-    .num_bits(23),
-    .num_taps(4),
-    .tap_bits(23'b000_0000_0000_0000_1000_0000),
-    .clock_bit(23'b111_0000_0000_0100_0000_0000)
-) l2 (
-    .clk(clk),
-    .reset_n(reset_n),
-    .clk_en(lfsr_clk_en),
-    .d(clk),
-    .q(l2_q)
-);
 
 reg fifo_rd_en;
 wire [31:0] fifo_rd_data;
@@ -65,7 +25,14 @@ wire [31:0] fifo_wr_data = a5_sr;
 reg fifo_wr_en;
 reg [31:0] a5_sr;
 
-wire a5_out = l0_q ^ l1_q ^ l2_q;
+wire a5_out;
+
+A5Generator A5Generator(
+    .clk(clk),
+    .reset_n(reset_n),
+    .lfsr_clk_en(lfsr_clk_en),
+    .d(a5_out)
+);
 
 always @(posedge clk or negedge reset_n)
     if (!reset_n)
