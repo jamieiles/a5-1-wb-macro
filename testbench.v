@@ -38,8 +38,14 @@ wrapper wrapper(
     .active(active)
 );
 
+reg [8 * 4096:0] vcd_filename;
+
 initial begin
-    $dumpfile("wrapper.vcd");
+    if (! $value$plusargs("vcd_filename=%s", vcd_filename)) begin
+        $display("ERROR: please specify +vcd_filename=<value> as an absolute path.");
+        $finish;
+    end
+    $dumpfile(vcd_filename);
     $dumpvars(0, wrapper);
 end
 
