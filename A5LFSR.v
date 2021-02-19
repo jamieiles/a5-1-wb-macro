@@ -6,6 +6,7 @@ module AFLFSR #(
 )(
     input wire clk,
     input wire reset_n,
+    input wire load,
     input wire clk_en,
     input wire d,
     output wire q
@@ -13,7 +14,9 @@ module AFLFSR #(
 
 reg [num_bits-1:0] sr;
 reg feedback;
-
+wire [num_bits-1:0] next_sr = load ? {num_bits{1'b0}} :
+    clk_en ? {sr[num_bits-2:0], d ^ feedback} :
+    sr;
 integer i;
 
 assign q = sr[num_bits-1];
@@ -29,7 +32,7 @@ end
 always @(posedge clk or negedge reset_n)
     if (!reset_n)
         sr <= {num_bits{1'b0}};
-    else if (clk_en)
-        sr <= {sr[num_bits-2:0], d ^ feedback};
+    else
+        sr <= next_sr;
 
 endmodule
