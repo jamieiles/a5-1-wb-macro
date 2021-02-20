@@ -1,3 +1,10 @@
+`timescale 1ns/1ns
+`ifdef GATE_LEVEL
+`define UNIT_DELAY #1
+`define USE_POWER_PINS
+`include "libs.ref/sky130_fd_sc_hd/verilog/primitives.v"
+`include "libs.ref/sky130_fd_sc_hd/verilog/sky130_fd_sc_hd.v"
+`endif
 module testbench (
     input wire wb_clk_i,
     input wire wb_rst_i,
@@ -19,6 +26,10 @@ module testbench (
 );
 
 wrapper wrapper(
+`ifdef GATE_LEVEL
+    .VPWR(1'b1),
+    .VGND(1'b0),
+`endif /* GATE_LEVEL */
     .wb_clk_i(wb_clk_i),
     .wb_rst_i(wb_rst_i),
     .wbs_stb_i(wbs_stb_i),

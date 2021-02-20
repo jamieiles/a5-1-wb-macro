@@ -3,10 +3,13 @@ O ?= $(PWD)
 .PHONY:	harden sim
 harden:	$(O)/macro/submission/results/magic/wrapper.gds
 
-sim:
-	$(MAKE) -C sim O=$(O)
+test_wrapper:
+	$(MAKE) -C sim O=$(O) test_wrapper
 
-$(O)/macro/submission/results/magic/wrapper.gds:	$(VERILOG_SOURCES) macro/config.tcl macro/wrapper.sdc
+test_gl:	$(O)/macro/submission/results/lvs/wrapper.lvs.powered.v
+	$(MAKE) -C sim O=$(O) test_gl
+
+$(O)/macro/submission/results/magic/wrapper.gds $(O)/macro/submission/results/lvs/wrapper.lvs.powered.v:	$(VERILOG_SOURCES) macro/config.tcl macro/wrapper.sdc
 	docker run -it \
 		-v $(CURDIR):/work \
 		-v $(OPENLANE_ROOT):/openLANE_flow \
