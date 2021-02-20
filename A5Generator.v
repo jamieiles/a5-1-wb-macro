@@ -2,8 +2,9 @@ module A5Generator(
     input wire clk,
     input wire reset_n,
     input wire load,
-    input wire lfsr_clk_en,
-    output wire d,
+    input wire stall,
+    output wire q,
+    output reg valid,
     input wire [63:0] key,
     input wire [21:0] frame
 );
@@ -11,16 +12,60 @@ module A5Generator(
 wire l0_q;
 wire l1_q;
 wire l2_q;
-reg [95:0] init_sr;
+reg [85:0] init_sr;
 wire lfsr_in = init_sr[0];
+wire [2:0] lfsr_clk_en = ({3{~stall}} & {lfsr_clk_bits[2] == clk_bit_majority,
+    lfsr_clk_bits[1] == clk_bit_majority,
+    lfsr_clk_bits[0] == clk_bit_majority}) | {3{clock_unconditional}};
+wire [2:0] lfsr_clk_bits;
+wire clock_unconditional = init_cycle_count > 99;
+reg clk_bit_majority;
 
-assign d = l0_q ^ l1_q ^ l2_q;
+// 64 key bits + 22 frame number bits + 100 mix 0's
+localparam init_cycles = 64 + 22 + 100;
+localparam init_bits = $clog2(init_cycles);
+
+reg [init_bits-1:0] init_cycle_count;
+reg init_done;
+
+assign q = l0_q ^ l1_q ^ l2_q;
 
 always @(posedge clk)
     if (load)
         init_sr <= {frame, key};
     else
-        init_sr <= {1'b0, init_sr[95:1]};
+        init_sr <= {1'b0, init_sr[85:1]};
+
+always @(posedge clk or negedge reset_n)
+    if (!reset_n)
+        init_done <= 1'b0;
+    else
+        init_done <= load ? 1'b0 : ~|init_cycle_count;
+
+always @(posedge clk or negedge reset_n)
+    if (!reset_n)
+        valid <= 1'b0;
+    else
+        valid <= load ? 1'b0 : init_done;
+
+always @(posedge clk)
+    if (load)
+        init_cycle_count <= init_cycles - 1'b1;
+    else if (|init_cycle_count)
+        init_cycle_count <= init_cycle_count - 1'b1;
+
+always @(*) begin
+    case (lfsr_clk_bits)
+    3'b000: clk_bit_majority = 1'b0;
+    3'b001: clk_bit_majority = 1'b0;
+    3'b010: clk_bit_majority = 1'b0;
+    3'b011: clk_bit_majority = 1'b1;
+    3'b100: clk_bit_majority = 1'b0;
+    3'b101: clk_bit_majority = 1'b1;
+    3'b110: clk_bit_majority = 1'b1;
+    3'b111: clk_bit_majority = 1'b1;
+    endcase
+end
 
 AFLFSR #(
     .num_bits(19),
@@ -31,9 +76,10 @@ AFLFSR #(
     .clk(clk),
     .reset_n(reset_n),
     .load(load),
-    .clk_en(lfsr_clk_en),
+    .clk_en(lfsr_clk_en[0]),
     .d(lfsr_in),
-    .q(l0_q)
+    .q(l0_q),
+    .clk_bit_o(lfsr_clk_bits[0])
 );
 
 AFLFSR #(
@@ -45,23 +91,25 @@ AFLFSR #(
     .clk(clk),
     .reset_n(reset_n),
     .load(load),
-    .clk_en(lfsr_clk_en),
+    .clk_en(lfsr_clk_en[1]),
     .d(lfsr_in),
-    .q(l1_q)
+    .q(l1_q),
+    .clk_bit_o(lfsr_clk_bits[1])
 );
 
 AFLFSR #(
     .num_bits(23),
     .num_taps(4),
-    .tap_bits(23'b000_0000_0000_0000_1000_0000),
+    .tap_bits(23'b111_0000_0000_0000_1000_0000),
     .clock_bit(10)
 ) l2 (
     .clk(clk),
     .reset_n(reset_n),
     .load(load),
-    .clk_en(lfsr_clk_en),
+    .clk_en(lfsr_clk_en[2]),
     .d(lfsr_in),
-    .q(l2_q)
+    .q(l2_q),
+    .clk_bit_o(lfsr_clk_bits[2])
 );
 
 endmodule

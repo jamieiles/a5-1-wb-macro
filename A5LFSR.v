@@ -9,7 +9,8 @@ module AFLFSR #(
     input wire load,
     input wire clk_en,
     input wire d,
-    output wire q
+    output wire q,
+    output wire clk_bit_o
 );
 
 reg [num_bits-1:0] sr;
@@ -20,6 +21,7 @@ wire [num_bits-1:0] next_sr = load ? {num_bits{1'b0}} :
 integer i;
 
 assign q = sr[num_bits-1];
+assign clk_bit_o = sr[clock_bit];
 
 always @(*) begin
     feedback = 1'b0;

@@ -13,14 +13,16 @@ wire fifo_full;
 reg fifo_wr_en;
 reg [31:0] shift_reg;
 wire a5_out;
-wire lfsr_clk_en = ~fifo_full;
+wire lfsr_stall = fifo_full | fifo_wr_en;
+wire lfsr_valid;
 
 A5Generator A5Generator(
     .clk(clk),
     .reset_n(reset_n),
     .load(load),
-    .lfsr_clk_en(lfsr_clk_en),
-    .d(a5_out),
+    .stall(lfsr_stall),
+    .q(a5_out),
+    .valid(lfsr_valid),
     .key(key),
     .frame(frame)
 );
@@ -42,9 +44,11 @@ Fifo #(
 
 always @(posedge clk or negedge reset_n)
     if (!reset_n)
-        {fifo_wr_en, shift_reg} <= 33'b1;
+        {shift_reg, fifo_wr_en} <= {1'b1, 32'b0};
     else
-        {fifo_wr_en, shift_reg} <= fifo_wr_en || load ? 33'b1 :
-            lfsr_clk_en ? {shift_reg[31:0], a5_out} : {fifo_wr_en, shift_reg};
+        {shift_reg, fifo_wr_en} <=
+            !lfsr_valid || load || fifo_wr_en ? {1'b1, 32'b0} :
+            lfsr_stall ? {shift_reg, fifo_wr_en} :
+            {a5_out, shift_reg};
 
 endmodule
