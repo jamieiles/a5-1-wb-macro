@@ -2,7 +2,7 @@ module AFLFSR #(
     parameter num_bits = 8,
     parameter num_taps = 3,
     parameter tap_bits = 8'h80,
-    parameter clock_bit = 8'h80
+    parameter clock_bit = 0
 )(
     input wire clk,
     input wire reset_n,

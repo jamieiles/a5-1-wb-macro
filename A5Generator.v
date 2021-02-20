@@ -26,7 +26,7 @@ AFLFSR #(
     .num_bits(19),
     .num_taps(4),
     .tap_bits(19'b111_0010_0000_0000_0000),
-    .clock_bit(19'b000_0000_0001_0000_0000)
+    .clock_bit(8)
 ) l0 (
     .clk(clk),
     .reset_n(reset_n),
@@ -40,7 +40,7 @@ AFLFSR #(
     .num_bits(22),
     .num_taps(4),
     .tap_bits(22'b11_0000_0000_0000_0000_0000),
-    .clock_bit(22'b00_0000_0000_0100_0000_0000)
+    .clock_bit(10)
 ) l1 (
     .clk(clk),
     .reset_n(reset_n),
@@ -54,7 +54,7 @@ AFLFSR #(
     .num_bits(23),
     .num_taps(4),
     .tap_bits(23'b000_0000_0000_0000_1000_0000),
-    .clock_bit(23'b111_0000_0000_0100_0000_0000)
+    .clock_bit(10)
 ) l2 (
     .clk(clk),
     .reset_n(reset_n),
