@@ -48,11 +48,15 @@ always @(posedge clk or negedge reset_n)
     else
         valid <= load ? 1'b0 : init_done;
 
-always @(posedge clk)
-    if (load)
+always @(posedge clk or negedge reset_n)
+    if (!reset_n)
         init_cycle_count <= init_cycles - 1'b1;
-    else if (|init_cycle_count)
-        init_cycle_count <= init_cycle_count - 1'b1;
+    else begin
+        if (load)
+            init_cycle_count <= init_cycles - 1'b1;
+        else if (|init_cycle_count)
+            init_cycle_count <= init_cycle_count - 1'b1;
+    end
 
 always @(*) begin
     case (lfsr_clk_bits)
