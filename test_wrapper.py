@@ -33,10 +33,13 @@ async def test_wrapper(dut):
     dut.la_data_in <= 1
     await ClockCycles(dut.wb_clk_i, 128)
 
-    wbRes = await wbs.send_cycle([WBOp(0x10, 0x12345678), WBOp(0x14, 0xdefaced0), WBOp(0x18, 0), WBOp(4)])
-    await ClockCycles(dut.wb_clk_i, 128)
+    wbRes = await wbs.send_cycle([WBOp(0x0)])
+    print('{0:08x}'.format(wbRes[0].datrd.integer))
+
+    wbRes = await wbs.send_cycle([WBOp(0x10, 0x67452312), WBOp(0x14, 0xefcdab89), WBOp(0x18, 0x134), WBOp(8, 1)])
+    await ClockCycles(dut.wb_clk_i, 512)
 
     for _ in range(8):
-        wbRes = await wbs.send_cycle([WBOp(0)])
+        wbRes = await wbs.send_cycle([WBOp(0xc)])
         print(['{0:08x}'.format(w.datrd.integer) for w in wbRes])
         await ClockCycles(dut.wb_clk_i, 128)
