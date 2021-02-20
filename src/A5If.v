@@ -22,12 +22,12 @@ localparam REG_FRAME_OFFS   = 'h18;
 
 wire access             = wbs_stb_i & wbs_cyc_i & ~wbs_ack_o;
 wire reg_access_id      = access && wbs_adr_i[4:0] == REG_ID_OFFS;
-wire reg_access_status  = access && wbs_adr_i == REG_STATUS_OFFS;
-wire reg_access_control = access && wbs_adr_i == REG_CONTROL_OFFS;
-wire reg_access_data    = access && wbs_adr_i == REG_DATA_OFFS;
-wire reg_access_key_lo  = access && wbs_adr_i == REG_KEY_LO_OFFS;
-wire reg_access_key_hi  = access && wbs_adr_i == REG_KEY_HI_OFFS;
-wire reg_access_frame   = access && wbs_adr_i == REG_FRAME_OFFS;
+wire reg_access_status  = access && wbs_adr_i[4:0] == REG_STATUS_OFFS;
+wire reg_access_control = access && wbs_adr_i[4:0] == REG_CONTROL_OFFS;
+wire reg_access_data    = access && wbs_adr_i[4:0] == REG_DATA_OFFS;
+wire reg_access_key_lo  = access && wbs_adr_i[4:0] == REG_KEY_LO_OFFS;
+wire reg_access_key_hi  = access && wbs_adr_i[4:0] == REG_KEY_HI_OFFS;
+wire reg_access_frame   = access && wbs_adr_i[4:0] == REG_FRAME_OFFS;
 
 wire [31:0] id_o        = 32'h41354135;
 wire [31:0] status_o    = {31'b0, ~keystream_empty};
