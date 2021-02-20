@@ -1,12 +1,12 @@
 O ?= $(PWD)
 
-VERILOG_SOURCES = wrapper.v \
-	testbench.v \
-	A5If.v \
-	Fifo.v \
-	A5LFSR.v \
-	A5Buffer.v \
-	A5Generator.v
+VERILOG_SOURCES = src/wrapper.v \
+	sim/testbench.v \
+	src/A5If.v \
+	src/Fifo.v \
+	src/A5LFSR.v \
+	src/A5Buffer.v \
+	src/A5Generator.v
 
 TOPLEVEL=testbench
 MODULE=test_wrapper
@@ -15,6 +15,7 @@ SIM_BUILD=$(O)/sim_build
 PLUSARGS=+vcd_filename=$(O)/wrapper.vcd
 
 export COCOTB_RESULTS_FILE=$(O)/results.xml
+export PYTHONPATH:=$(CURDIR)/sim:$(PYTHONPATH)
 export PYTHONDONTWRITEBYTECODE=1
 
 include $(shell cocotb-config --makefiles)/Makefile.sim

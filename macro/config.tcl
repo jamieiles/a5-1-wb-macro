@@ -1,10 +1,10 @@
 set ::env(DESIGN_NAME) "wrapper"
-set ::env(VERILOG_FILES) "$::env(DESIGN_DIR)/../A5If.v
-    $::env(DESIGN_DIR)/../A5LFSR.v
-    $::env(DESIGN_DIR)/../A5Buffer.v
-    $::env(DESIGN_DIR)/../A5Generator.v
-    $::env(DESIGN_DIR)/../wrapper.v
-    $::env(DESIGN_DIR)/../Fifo.v"
+set ::env(VERILOG_FILES) "$::env(DESIGN_DIR)/../src/A5If.v
+    $::env(DESIGN_DIR)/../src/A5LFSR.v
+    $::env(DESIGN_DIR)/../src/A5Buffer.v
+    $::env(DESIGN_DIR)/../src/A5Generator.v
+    $::env(DESIGN_DIR)/../src/wrapper.v
+    $::env(DESIGN_DIR)/../src/Fifo.v"
 set ::env(SDC_FILE) "$::env(DESIGN_DIR)/wrapper.sdc"
 set ::env(VERILOG_INCLUDE_DIRS) "$::env(DESIGN_DIR)"
 
