@@ -1,5 +1,15 @@
 O ?= $(PWD)
 
+VERILOG_SOURCES = src/wrapper.v \
+	src/A5If.v \
+	src/Fifo.v \
+	src/A5LFSR.v \
+	src/A5Buffer.v \
+	src/A5Generator.v \
+	sim/testbench.v \
+	sim/defines.v \
+	macro/defines.v
+
 .PHONY:	harden sim formal
 harden:	$(O)/macro/submission/results/magic/wrapper.gds
 
