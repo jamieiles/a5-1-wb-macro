@@ -1,0 +1,18 @@
+[options]
+mode prove
+
+[engines]
+smtbmc
+
+[script]
+read -formal wrapper.v Fifo.v A5LFSR.v A5If.v A5Generator.v A5Buffer.v
+prep -top wrapper
+
+[files]
+src/wrapper.v
+src/properties.v
+src/Fifo.v
+src/A5LFSR.v
+src/A5If.v
+src/A5Generator.v
+src/A5Buffer.v

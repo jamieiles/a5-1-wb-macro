@@ -1,6 +1,6 @@
 O ?= $(PWD)
 
-.PHONY:	harden sim
+.PHONY:	harden sim formal
 harden:	$(O)/macro/submission/results/magic/wrapper.gds
 
 test_wrapper:
@@ -8,6 +8,9 @@ test_wrapper:
 
 test_gl:	$(O)/macro/submission/results/lvs/wrapper.lvs.powered.v
 	$(MAKE) -C sim O=$(O) test_gl
+
+formal:
+	sby -f $(CURDIR)/sim/properties.sby -d $(O)/formal
 
 $(O)/macro/submission/results/magic/wrapper.gds $(O)/macro/submission/results/lvs/wrapper.lvs.powered.v:	$(VERILOG_SOURCES) macro/config.tcl macro/wrapper.sdc
 	docker run -it \
