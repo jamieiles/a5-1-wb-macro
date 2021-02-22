@@ -4,16 +4,16 @@ module A5Buffer (
     input wire load,
     output wire [31:0] data_out,
     output wire empty,
+    output wire full,
     input wire rd_en,
     input wire [63:0] key,
     input wire [21:0] frame
 );
 
-wire fifo_full;
 reg fifo_wr_en;
 reg [31:0] shift_reg;
 wire a5_out;
-wire lfsr_stall = fifo_full | fifo_wr_en;
+wire lfsr_stall = full | fifo_wr_en;
 wire lfsr_valid;
 
 A5Generator A5Generator(
@@ -39,7 +39,7 @@ Fifo #(
     .rd_en(rd_en),
     .rd_data(data_out),
     .empty(empty),
-    .full(fifo_full)
+    .full(full)
 );
 
 always @(posedge clk or negedge reset_n)
