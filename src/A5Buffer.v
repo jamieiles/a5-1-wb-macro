@@ -5,6 +5,7 @@ module A5Buffer (
     output wire [31:0] data_out,
     output wire empty,
     output wire full,
+    output wire busy,
     input wire rd_en,
     input wire [63:0] key,
     input wire [21:0] frame
@@ -23,6 +24,7 @@ A5Generator A5Generator(
     .stall(lfsr_stall),
     .q(a5_out),
     .valid(lfsr_valid),
+    .busy(busy),
     .key(key),
     .frame(frame)
 );

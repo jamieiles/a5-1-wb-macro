@@ -30,7 +30,7 @@ wire reg_access_key_hi  = access && wbs_adr_i[4:0] == REG_KEY_HI_OFFS;
 wire reg_access_frame   = access && wbs_adr_i[4:0] == REG_FRAME_OFFS;
 
 wire [31:0] id_o        = 32'h41354135;
-wire [31:0] status_o    = {31'b0, keystream_full, ~keystream_empty};
+wire [31:0] status_o    = {29'b0, keystream_busy, keystream_full, ~keystream_empty};
 wire [31:0] control_o   = 32'b0;
 wire [31:0] data_o      = keystream_data;
 wire [31:0] key_lo_o    = key[31:0];
@@ -41,6 +41,7 @@ reg [31:0]  wb_data_o;
 wire [31:0] keystream_data;
 wire keystream_empty;
 wire keystream_full;
+wire keystream_busy;
 reg keystream_read;
 reg keystream_load;
 reg [63:0] key;
@@ -53,6 +54,7 @@ A5Buffer A5Buffer (
     .data_out(keystream_data),
     .empty(keystream_empty),
     .full(keystream_full),
+    .busy(keystream_busy),
     .rd_en(keystream_read),
     .key(key),
     .frame(frame)

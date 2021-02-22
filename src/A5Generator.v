@@ -5,6 +5,7 @@ module A5Generator(
     input wire stall,
     output wire q,
     output reg valid,
+    output wire busy,
     input wire [63:0] key,
     input wire [21:0] frame
 );
@@ -29,6 +30,7 @@ reg [init_bits-1:0] init_cycle_count;
 reg init_done;
 
 assign q = l0_q ^ l1_q ^ l2_q;
+assign busy = |init_cycle_count | valid | init_done;
 
 always @(posedge clk)
     if (load)
