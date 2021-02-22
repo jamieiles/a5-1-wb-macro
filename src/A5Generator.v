@@ -71,7 +71,7 @@ always @(*) begin
     endcase
 end
 
-AFLFSR #(
+A5LFSR #(
     .num_bits(19),
     .num_taps(4),
     .tap_bits(19'b111_0010_0000_0000_0000),
@@ -86,7 +86,7 @@ AFLFSR #(
     .clk_bit_o(lfsr_clk_bits[0])
 );
 
-AFLFSR #(
+A5LFSR #(
     .num_bits(22),
     .num_taps(4),
     .tap_bits(22'b11_0000_0000_0000_0000_0000),
@@ -101,7 +101,7 @@ AFLFSR #(
     .clk_bit_o(lfsr_clk_bits[1])
 );
 
-AFLFSR #(
+A5LFSR #(
     .num_bits(23),
     .num_taps(4),
     .tap_bits(23'b111_0000_0000_0000_1000_0000),

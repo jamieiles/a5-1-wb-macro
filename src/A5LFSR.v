@@ -1,4 +1,4 @@
-module AFLFSR #(
+module A5LFSR #(
     parameter num_bits = 8,
     parameter num_taps = 3,
     parameter tap_bits = 8'h80,
