@@ -1,8 +1,6 @@
 `default_nettype none
 `ifdef FORMAL
     `define MPRJ_IO_PADS 38
-`else
-    `include "defines.v"
 `endif
 module wrapper (
     // interface as user_proj_example.v

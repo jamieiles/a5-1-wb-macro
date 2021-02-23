@@ -4,7 +4,8 @@ VERILOG_SOURCES = ../src/wrapper.v \
 	../src/A5LFSR.v \
 	../src/A5Buffer.v \
 	../src/A5Generator.v \
-	testbench.v
+	testbench.v \
+	defines.v
 
 GL_SOURCES = $(O)/macro/submission/results/lvs/wrapper.lvs.powered.v \
 	testbench.v
