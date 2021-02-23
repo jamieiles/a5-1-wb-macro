@@ -27,7 +27,7 @@ always @(*) begin
     feedback = 1'b0;
     for (i = 0; i < num_bits; i = i + 1) begin
         if (tap_bits[i])
-            feedback ^= sr[i];
+            feedback = feedback ^ sr[i];
     end
 end
 
