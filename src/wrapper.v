@@ -3,6 +3,10 @@
     `define MPRJ_IO_PADS 38
 `endif
 module wrapper (
+`ifdef USE_POWER_PINS
+    inout VPWR,
+    inout VGND,
+`endif
     // interface as user_proj_example.v
     input wire wb_clk_i,
     input wire wb_rst_i,

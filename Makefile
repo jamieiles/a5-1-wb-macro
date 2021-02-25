@@ -10,7 +10,7 @@ VERILOG_SOURCES = src/wrapper.v \
 	sim/defines.v \
 	macro/defines.v
 
-.PHONY:	harden sim formal
+.PHONY:	harden sim formal test_caravel
 harden:	$(O)/macro/submission/results/magic/wrapper.gds
 
 test_wrapper:
@@ -18,6 +18,12 @@ test_wrapper:
 
 test_gl:	$(O)/macro/submission/results/lvs/wrapper.lvs.powered.v
 	$(MAKE) -C sim O=$(O) test_gl
+
+test_caravel:
+	$(MAKE) -C caravel_test O=$(O)
+
+test_caravel_gl:
+	$(MAKE) -C caravel_test O=$(O)
 
 formal:
 	sby -f $(CURDIR)/sim/properties.sby -d $(O)/formal
