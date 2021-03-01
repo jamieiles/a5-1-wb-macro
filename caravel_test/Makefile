@@ -14,7 +14,9 @@
 #
 # SPDX-License-Identifier: Apache-2.0
 
+CARAVEL_PATH ?= $(shell pwd)/../../../../../
 CARAVEL_DV_PATH := $(CARAVEL_PATH)/verilog/dv/caravel/
+O ?= $(shell pwd)
 
 FIRMWARE_PATH := $(CARAVEL_DV_PATH)
 VERILOG_PATH := $(CARAVEL_PATH)/verilog
@@ -25,12 +27,14 @@ GCC_PATH ?= /ef/apps/bin
 GCC_PREFIX ?= riscv32-unknown-elf
 PDK_PATH ?= /ef/tech/SW/sky130A
 
-VERILOG_FILES := ../src/A5Buffer.v \
-		 ../src/A5Generator.v \
-		 ../src/A5If.v \
-		 ../src/A5LFSR.v \
-		 ../src/Fifo.v \
-		 ../src/wrapper.v
+SRC_PATH ?= $(CARAVEL_PATH)/verilog/rtl/a5-1-wb-macro/src/
+
+VERILOG_FILES := $(SRC_PATH)/A5Buffer.v \
+		 $(SRC_PATH)/A5Generator.v \
+		 $(SRC_PATH)/A5If.v \
+		 $(SRC_PATH)/A5LFSR.v \
+		 $(SRC_PATH)/Fifo.v \
+		 $(SRC_PATH)/wrapper.v
 
 SIM ?= RTL
 
