@@ -1,11 +1,17 @@
 `default_nettype none
 `ifdef FORMAL
-    `define MPRJ_IO_PADS 38
+    `define MPRJ_IO_PADS 38    
 `endif
 module wrapper (
 `ifdef USE_POWER_PINS
-    inout VPWR,
-    inout VGND,
+    inout vdda1,	// User area 1 3.3V supply
+    inout vdda2,	// User area 2 3.3V supply
+    inout vssa1,	// User area 1 analog ground
+    inout vssa2,	// User area 2 analog ground
+    inout vccd1,	// User area 1 1.8V supply
+    inout vccd2,	// User area 2 1.8v supply
+    inout vssd1,	// User area 1 digital ground
+    inout vssd2,	// User area 2 digital ground
 `endif
     // interface as user_proj_example.v
     input wire wb_clk_i,
@@ -60,7 +66,7 @@ module wrapper (
 
     // permanently set oeb so that outputs are always enabled: 0 is output, 1 is high-impedance
     assign buf_io_oeb = `MPRJ_IO_PADS'h0;
-
+    // instantiate your module here, connecting what you need of the above signals
     A5If A5If(
         .clk(wb_clk_i),
         .reset_n(la_data_in[0]),
