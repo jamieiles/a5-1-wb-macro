@@ -33,7 +33,16 @@ wrapper_cksum:
 # openlane config, used in case I need to re-harden
 openlane:
   config: "config.tcl"
-  src_directory: "." # where the source files are
+
+
+# source required for various configs and module instantiation
+source:
+    - src/wrapper.v
+    - src/Fifo.v
+    - src/A5If.v
+    - src/A5Generator.v
+    - src/A5LFSR.v
+    - src/A5Buffer.v
 
 # gds - check size = 300x300, nothing on metal 5, do a DRC, check 141 tristate buffers, check LVS
 gds:
