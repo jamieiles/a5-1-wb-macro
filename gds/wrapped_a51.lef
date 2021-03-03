@@ -2,9 +2,9 @@ VERSION 5.7 ;
   NOWIREEXTENSIONATPIN ON ;
   DIVIDERCHAR "/" ;
   BUSBITCHARS "[]" ;
-MACRO wrapper
+MACRO wrapped_a51
   CLASS BLOCK ;
-  FOREIGN wrapper ;
+  FOREIGN wrapped_a51 ;
   ORIGIN 0.000 0.000 ;
   SIZE 300.000 BY 300.000 ;
   PIN active
@@ -2981,6 +2981,6 @@ MACRO wrapper
         RECT 99.840 61.375 174.240 257.545 ;
         RECT 176.640 61.375 216.825 257.545 ;
   END
-END wrapper
+END wrapped_a51
 END LIBRARY
 
