@@ -83,7 +83,7 @@ void main()
 
 	// Activate design
 	reg_la1_ena  = 0x00000000;
-	reg_la1_data = 0x00000001;
+    reg_la1_data = 1 << 2; // our ID is 2
 
 	// Reset A5 macro
 	reg_la0_ena  = 0x00000000;
