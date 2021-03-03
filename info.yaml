@@ -8,9 +8,9 @@ project:
 caravel_test:
   recipe: "all"
   directory: "caravel_test"
-  id: 0
-  module_name: "wrapper"
-  instance_name: "proj_0"
+  id: 2
+  module_name: "wrapped_a51"
+  instance_name: "wrapped_a51"
 
 # module test
 module_test:
