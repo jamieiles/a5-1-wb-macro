@@ -6,7 +6,7 @@ smtbmc
 
 [script]
 read -formal wrapper.v Fifo.v A5LFSR.v A5If.v A5Generator.v A5Buffer.v
-prep -top wrapper
+prep -top wrapped_a51
 
 [files]
 src/wrapper.v

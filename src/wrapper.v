@@ -2,7 +2,7 @@
 `ifdef FORMAL
     `define MPRJ_IO_PADS 38    
 `endif
-module wrapper (
+module wrapped_a51 (
 `ifdef USE_POWER_PINS
     inout vdda1,	// User area 1 3.3V supply
     inout vdda2,	// User area 2 3.3V supply

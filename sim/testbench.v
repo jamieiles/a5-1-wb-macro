@@ -25,7 +25,7 @@ module testbench (
     input wire active
 );
 
-wrapper wrapper(
+wrapped_a51 wrapped_a51(
 `ifdef GATE_LEVEL
     .VPWR(1'b1),
     .VGND(1'b0),
@@ -57,7 +57,7 @@ initial begin
         $finish;
     end
     $dumpfile(vcd_filename);
-    $dumpvars(0, wrapper);
+    $dumpvars(0, wrapped_a51);
 end
 
 endmodule
