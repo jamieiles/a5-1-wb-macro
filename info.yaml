@@ -1,8 +1,12 @@
 --- 
 # information
 project: 
-  description: "A5/1 Wishbone"
-  owner: "Jamie Iles"
+  title: "A5/1 Wishbone"
+  description: "A5/1 cryto block connected via wishbone to PicoRV32"
+  picture: doc/a5macro.png
+  author: "Jamie Iles"
+  github: https://github.com/mattvenn/a5-1-wb-macro/tree/multi_proj_tools
+  license: LICENSE
 
 # test within caravel
 caravel_test:
