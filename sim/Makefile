@@ -7,7 +7,7 @@ VERILOG_SOURCES = ../src/wrapper.v \
 	testbench.v \
 	defines.v
 
-GL_SOURCES = $(O)/macro/submission/results/lvs/wrapper.lvs.powered.v \
+GL_SOURCES = $(O)/macro/submission/results/lvs/wrapped_a51.lvs.powered.v \
 	testbench.v
 
 COMPILE_ARGS=-D MPRJ_IO_PADS=38 -Wall -I sim

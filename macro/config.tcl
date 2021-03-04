@@ -1,4 +1,4 @@
-set ::env(DESIGN_NAME) "wrapper"
+set ::env(DESIGN_NAME) "wrapped_a51"
 set ::env(VERILOG_FILES) "$::env(DESIGN_DIR)/defines.v
     $::env(DESIGN_DIR)/../src/A5If.v
     $::env(DESIGN_DIR)/../src/A5LFSR.v

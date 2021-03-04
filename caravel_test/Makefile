@@ -54,7 +54,7 @@ ifeq ($(SIM),RTL)
 else
 	iverilog -DFUNCTIONAL -DSIM -DGL -I $(BEHAVIOURAL_MODELS) \
 	-I $(PDK_PATH) -I $(VERILOG_PATH) -I $(RTL_PATH) -DFIRMWARE_FILE=\"$(O)/a5.hex\" \
-	$< $(O)/macro/submission/results/lvs/wrapper.lvs.powered.v -o $@
+	$< $(O)/macro/submission/results/lvs/wrapped_a51.lvs.powered.v -o $@
 endif
 
 $(O)/%.$(SIM).fst: $(O)/%.vvp
