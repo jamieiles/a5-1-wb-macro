@@ -4,8 +4,14 @@
 `endif
 module wrapped_a51 (
 `ifdef USE_POWER_PINS
-    inout VPWR,	// User area 1 3.3V supply
-    inout VGND,	// User area 1 digital ground
+    inout vdda1,	// User area 1 3.3V supply
+    inout vdda2,	// User area 2 3.3V supply
+    inout vssa1,	// User area 1 analog ground
+    inout vssa2,	// User area 2 analog ground
+    inout vccd1,	// User area 1 1.8V supply
+    inout vccd2,	// User area 2 1.8v supply
+    inout vssd1,	// User area 1 digital ground
+    inout vssd2,	// User area 2 digital ground
 `endif
     // interface as user_proj_example.v
     input wire wb_clk_i,
@@ -46,20 +52,20 @@ module wrapped_a51 (
     assign wbs_ack_o    = active ? buf_wbs_ack_o    : 1'b0;
     assign wbs_dat_o    = active ? buf_wbs_dat_o    : 32'b0;
     assign la_data_out  = active ? buf_la_data_out  : 32'b0;
-    assign io_out       = active ? buf_io_out       : `MPRJ_IO_PADS'b0;
-    assign io_oeb       = active ? buf_io_oeb       : `MPRJ_IO_PADS'b0;
+    assign io_out       = active ? buf_io_out       : {`MPRJ_IO_PADS{1'b0}};
+    assign io_oeb       = active ? buf_io_oeb       : {`MPRJ_IO_PADS{1'b0}};
     `include "properties.v"
     `else
     // tristate buffers
     assign wbs_ack_o    = active ? buf_wbs_ack_o    : 1'bz;
     assign wbs_dat_o    = active ? buf_wbs_dat_o    : 32'bz;
     assign la_data_out  = active ? buf_la_data_out  : 32'bz;
-    assign io_out       = active ? buf_io_out       : `MPRJ_IO_PADS'bz;
-    assign io_oeb       = active ? buf_io_oeb       : `MPRJ_IO_PADS'bz;
+    assign io_out       = active ? buf_io_out       : {`MPRJ_IO_PADS{1'bz}};
+    assign io_oeb       = active ? buf_io_oeb       : {`MPRJ_IO_PADS{1'bz}};
     `endif
 
     // permanently set oeb so that outputs are always enabled: 0 is output, 1 is high-impedance
-    assign buf_io_oeb = `MPRJ_IO_PADS'h0;
+    assign buf_io_oeb = {`MPRJ_IO_PADS{1'b0}};
     // instantiate your module here, connecting what you need of the above signals
     A5If A5If(
         .clk(wb_clk_i),

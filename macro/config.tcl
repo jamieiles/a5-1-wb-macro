@@ -16,3 +16,8 @@ set ::env(GLB_RT_MAXLAYER) 5
 
 set ::env(CLOCK_PERIOD) "7.500"
 set ::env(CLOCK_PORT) "wb_clk_i"
+
+set ::env(VDD_NETS) [list {vccd1} {vccd2} {vdda1} {vdda2}]
+set ::env(GND_NETS) [list {vssd1} {vssd2} {vssa1} {vssa2}]
+set ::env(FP_PIN_ORDER_CFG) "$::env(DESIGN_DIR)/pin_order.cfg"
+set ::env(RUN_CVC) 0

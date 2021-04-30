@@ -27,8 +27,14 @@ module testbench (
 
 wrapped_a51 wrapped_a51(
 `ifdef GATE_LEVEL
-    .VPWR(1'b1),
-    .VGND(1'b0),
+    .vdda1(1'b1),
+    .vdda2(1'b1),
+    .vccd1(1'b1),
+    .vccd2(1'b1),
+    .vssa1(1'b0),
+    .vssa2(1'b0),
+    .vssd1(1'b0),
+    .vssd2(1'b0),
 `endif /* GATE_LEVEL */
     .wb_clk_i(wb_clk_i),
     .wb_rst_i(wb_rst_i),
