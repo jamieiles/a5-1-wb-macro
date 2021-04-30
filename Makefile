@@ -20,10 +20,10 @@ test_gl:	$(O)/macro/submission/results/lvs/wrapped_a51.lvs.powered.v
 	$(MAKE) -C sim O=$(O) test_gl
 
 test_caravel:
-	$(MAKE) -C caravel_test SRC_PATH=$(PWD)/src O=$(O)
+	$(MAKE) -C caravel_test GL_A51=$(O)/macro/submission/results/lvs/wrapped_a51.lvs.powered.v SRC_PATH=$(PWD)/src O=$(O)
 
 test_caravel_gl:
-	$(MAKE) -C caravel_test SRC_PATH=$(PWD)/src O=$(O)
+	$(MAKE) -C caravel_test GL_A51=$(O)/macro/submission/results/lvs/wrapped_a51.lvs.powered.v SRC_PATH=$(PWD)/src O=$(O)
 
 formal:
 	sby -f $(CURDIR)/sim/properties.sby -d $(O)/formal

@@ -25,6 +25,13 @@ $ make O=$(pwd)/_build test_caravel
 $ make O=$(pwd)/_build test_caravel_gl
 ```
 
+Caravel tests need several environment variables set:
+
+ - `CARAVEL_ROOT=<PATH_TO_CARAVEL>`
+ - `GCC_PATH=<PATH_TO_RISCV_GCC>`
+ - `GCC_PREFIX=riscv64-unknown-elf`
+ - `PDK_PATH=$PDKPATH`
+
 ## References
 
 https://en.wikipedia.org/wiki/A5/1

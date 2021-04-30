@@ -14,27 +14,35 @@
 #
 # SPDX-License-Identifier: Apache-2.0
 
-CARAVEL_PATH ?= $(shell pwd)/../../../../../
+CARAVEL_PATH ?= $(CARAVEL_ROOT)
 CARAVEL_DV_PATH := $(CARAVEL_PATH)/verilog/dv/caravel/
 O ?= $(shell pwd)
 
 FIRMWARE_PATH := $(CARAVEL_DV_PATH)
 VERILOG_PATH := $(CARAVEL_PATH)/verilog
 RTL_PATH := $(VERILOG_PATH)/rtl
+GL_PATH := $(VERILOG_PATH)/gl
 BEHAVIOURAL_MODELS := $(CARAVEL_DV_PATH)
+
+## User Project Pointers
+UPRJ_VERILOG_PATH ?= ../../../verilog
+UPRJ_RTL_PATH = $(UPRJ_VERILOG_PATH)/rtl
+UPRJ_BEHAVIOURAL_MODELS = ../
 
 GCC_PATH ?= /ef/apps/bin
 GCC_PREFIX ?= riscv32-unknown-elf
 PDK_PATH ?= /ef/tech/SW/sky130A
 
-SRC_PATH ?= $(CARAVEL_PATH)/verilog/rtl/a5-1-wb-macro/src/
+SRC_PATH ?= $(CARAVEL_PATH)/../verilog/rtl/a5-1-wb-macro/src/
 
-VERILOG_FILES := $(SRC_PATH)/A5Buffer.v \
+GL_A51 ?= ../../../verilog/rtl/a5-1-wb-macro/gds/wrapped_a51.lvs.powered.v
+
+VERILOG_FILES := $(SRC_PATH)/wrapper.v \
+		 $(SRC_PATH)/A5Buffer.v \
 		 $(SRC_PATH)/A5Generator.v \
 		 $(SRC_PATH)/A5If.v \
 		 $(SRC_PATH)/A5LFSR.v \
-		 $(SRC_PATH)/Fifo.v \
-		 $(SRC_PATH)/wrapper.v
+		 $(SRC_PATH)/Fifo.v
 
 SIM ?= RTL
 
@@ -49,12 +57,12 @@ hex:  $(O)/${PATTERN:=.hex}
 $(O)/%.vvp: %_tb.v $(O)/%.hex
 ifeq ($(SIM),RTL)
 	iverilog -DFUNCTIONAL -DSIM -I $(BEHAVIOURAL_MODELS) \
-	-I $(PDK_PATH) -I $(RTL_PATH) -DFIRMWARE_FILE=\"$(O)/a5.hex\" \
-	$< $(VERILOG_FILES) -o $@
+	-I $(PDK_PATH) -DUSE_POWER_PINS=1 -I $(RTL_PATH) -I $(UPRJ_RTL_PATH) -DFIRMWARE_FILE=\"$(O)/a5.hex\" \
+	$(VERILOG_FILES) $< -o $@
 else
 	iverilog -DFUNCTIONAL -DSIM -DGL -I $(BEHAVIOURAL_MODELS) \
-	-I $(PDK_PATH) -I $(VERILOG_PATH) -I $(RTL_PATH) -DFIRMWARE_FILE=\"$(O)/a5.hex\" \
-	$< $(O)/macro/submission/results/lvs/wrapped_a51.lvs.powered.v -o $@
+	-I $(PDK_PATH) -I $(VERILOG_PATH) -I $(RTL_PATH) -I $(VERILOG_PATH) -I$(UPRJ_VERILOG_PATH) -I $(UPRJ_RTL_PATH) -I $(CARAVEL_PATH)/../../../verilog -DFIRMWARE_FILE=\"$(O)/a5.hex\" \
+	$< $(GL_A51) -o $@
 endif
 
 $(O)/%.$(SIM).fst: $(O)/%.vvp
