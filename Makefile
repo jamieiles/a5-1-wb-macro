@@ -1,5 +1,7 @@
 O ?= $(PWD)
 
+PDK_PATH := $(PDK_ROOT)/sky130A
+
 VERILOG_SOURCES = src/wrapper.v \
 	src/A5If.v \
 	src/Fifo.v \
@@ -33,8 +35,10 @@ $(O)/macro/submission/results/magic/wrapped_a51.gds $(O)/macro/submission/result
 		-v $(CURDIR):/work \
 		-v $(OPENLANE_ROOT):/openLANE_flow \
 		-v $(PDK_ROOT):$(PDK_ROOT) \
+		-v $(PDK_PATH):$(PDK_PATH) \
 		-v $(O):/out \
 		-e PDK_ROOT=$(PDK_ROOT) \
+		-e PDK_PATH=$(PDK_PATH) \
 		-u $(shell id -u $$USER):$(shell id -g $$USER) \
-		efabless/openlane:v0.12 \
+		efabless/openlane:v0.15 \
 		/bin/bash -c "./flow.tcl -overwrite -design /work/macro -run_path /out/macro -tag submission"
