@@ -25,7 +25,7 @@ GL_PATH := $(VERILOG_PATH)/gl
 BEHAVIOURAL_MODELS := $(CARAVEL_DV_PATH)
 
 ## User Project Pointers
-UPRJ_VERILOG_PATH ?= ../../../verilog
+UPRJ_VERILOG_PATH ?= $(CARAVEL_PATH)/../verilog
 UPRJ_RTL_PATH = $(UPRJ_VERILOG_PATH)/rtl
 UPRJ_BEHAVIOURAL_MODELS = ../
 
@@ -36,13 +36,6 @@ PDK_PATH ?= /ef/tech/SW/sky130A
 SRC_PATH ?= $(CARAVEL_PATH)/../verilog/rtl/a5-1-wb-macro/src/
 
 GL_A51 ?= ../../../verilog/rtl/a5-1-wb-macro/gds/wrapped_a51.lvs.powered.v
-
-VERILOG_FILES := $(SRC_PATH)/wrapper.v \
-		 $(SRC_PATH)/A5Buffer.v \
-		 $(SRC_PATH)/A5Generator.v \
-		 $(SRC_PATH)/A5If.v \
-		 $(SRC_PATH)/A5LFSR.v \
-		 $(SRC_PATH)/Fifo.v
 
 SIM ?= RTL
 
@@ -58,7 +51,7 @@ $(O)/%.vvp: %_tb.v $(O)/%.hex
 ifeq ($(SIM),RTL)
 	iverilog -DFUNCTIONAL -DSIM -I $(BEHAVIOURAL_MODELS) \
 	-I $(PDK_PATH) -DUSE_POWER_PINS=1 -I $(RTL_PATH) -I $(UPRJ_RTL_PATH) -DFIRMWARE_FILE=\"$(O)/a5.hex\" \
-	$(VERILOG_FILES) $< -o $@
+	$< -o $@
 else
 	iverilog -DFUNCTIONAL -DSIM -DGL -I $(BEHAVIOURAL_MODELS) \
 	-I $(PDK_PATH) -I $(VERILOG_PATH) -I $(RTL_PATH) -I $(VERILOG_PATH) -I$(UPRJ_VERILOG_PATH) -I $(UPRJ_RTL_PATH) -I $(CARAVEL_PATH)/../../../verilog -DFIRMWARE_FILE=\"$(O)/a5.hex\" \
