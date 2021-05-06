@@ -31,7 +31,7 @@ static uint32_t readl(unsigned long addr)
 	return *(volatile uint32_t *)addr;
 }
 
-static uint32_t writel(unsigned long addr, uint32_t v)
+static void writel(unsigned long addr, uint32_t v)
 {
 	*(volatile uint32_t *)addr = v;
 }
