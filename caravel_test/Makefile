@@ -62,7 +62,7 @@ $(O)/%.$(SIM).fst: $(O)/%.vvp
 	vvp $< -fst +fst_filename=$(O)/caravel.$(SIM).fst +firmware=$(O)/a5.hex
 
 $(O)/%.elf: %.c $(FIRMWARE_PATH)/sections.lds $(FIRMWARE_PATH)/start.s
-	${GCC_PATH}/${GCC_PREFIX}-gcc -I$(FIRMWARE_PATH) -march=rv32imc -mabi=ilp32 -Wl,-Bstatic,-T,$(FIRMWARE_PATH)/sections.lds,--strip-debug -ffreestanding -nostdlib -o $@ $(FIRMWARE_PATH)/start.s $<
+	${GCC_PATH}/${GCC_PREFIX}-gcc -Wall -Wextra -I$(FIRMWARE_PATH) -march=rv32imc -mabi=ilp32 -Wl,-Bstatic,-T,$(FIRMWARE_PATH)/sections.lds,--strip-debug -ffreestanding -nostdlib -o $@ $(FIRMWARE_PATH)/start.s $<
 
 $(O)/%.hex: $(O)/%.elf
 	@echo "O=$(O)"
