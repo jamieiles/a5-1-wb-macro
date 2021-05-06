@@ -5,6 +5,7 @@ always @(*) begin
         assert(la_data_out == buf_la_data_out);
         assert(io_out == buf_io_out);
         assert(io_oeb == buf_io_oeb);
+	assert(irq == buf_irq);
     end
     if(!active) begin
         assert(~wbs_ack_o);
@@ -12,5 +13,6 @@ always @(*) begin
         assert(~|la_data_out);
         assert(~|io_out);
         assert(~|io_oeb);
+	assert(~|irq);
     end
 end

@@ -82,11 +82,13 @@ void main()
 	reg_mprj_datal = 0x00000000;
 
 	// Activate design
-	reg_la1_ena  = 0x00000000;
-    reg_la1_data = 1 << 2; // our ID is 2
+	reg_la1_iena = 0x00000000;
+	reg_la1_oenb = 0x00000000;
+	reg_la1_data = 1 << 2; // our ID is 2
 
 	// Reset A5 macro
-	reg_la0_ena  = 0x00000000;
+	reg_la0_oenb = 0x00000000;
+	reg_la0_iena = 0x00000000;
 	reg_la0_data = 0x00000001;
 	reg_la0_data = 0x00000000;
 	reg_la0_data = 0x00000001;
