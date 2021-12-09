@@ -10,7 +10,7 @@ set ::env(VERILOG_FILES) "$::env(DESIGN_DIR)/defines.v
 set ::env(SDC_FILE) "$::env(DESIGN_DIR)/wrapper.sdc"
 set ::env(VERILOG_INCLUDE_DIRS) "$::env(DESIGN_DIR)"
 
-set ::env(DIE_AREA) "0 0 350 350"
+set ::env(DIE_AREA) "0 0 380 380"
 set ::env(FP_SIZING) absolute
 set ::env(DESIGN_IS_CORE) 0
 set ::env(GLB_RT_MAXLAYER) 5
@@ -28,3 +28,6 @@ set ::env(PL_RESIZER_BUFFER_OUTPUT_PORTS) 0
 # fix for hold time violation
 set ::env(PL_RESIZER_HOLD_SLACK_MARGIN) 0.5
 set ::env(GLB_RESIZER_HOLD_SLACK_MARGIN) 0.5
+
+set ::env(FP_IO_VTHICKNESS_MULT) 4
+set ::env(FP_IO_HTHICKNESS_MULT) 4
