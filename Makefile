@@ -40,5 +40,5 @@ $(O)/macro/submission/results/magic/wrapped_a51.gds $(O)/macro/submission/result
 		-e PDK_ROOT=$(PDK_ROOT) \
 		-e PDK_PATH=$(PDK_PATH) \
 		-u $(shell id -u $$USER):$(shell id -g $$USER) \
-		efabless/openlane:v0.15 \
+		$(OPENLANE_IMAGE_NAME) \
 		/bin/bash -c "./flow.tcl -overwrite -design /work/macro -run_path /out/macro -tag submission"
